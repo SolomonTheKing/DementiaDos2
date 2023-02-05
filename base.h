@@ -6,6 +6,26 @@ using namespace std;
 extern int32_t lnum; // line number iterator
 string lastcommand = "####";
 
+void logcommand(string command) {
+  int8_t screenx = getmaxx(stdscr);
+  mvprintw(lnum, screenx - command.length(), "%s", command.c_str());
+}
+
+
+void showinput(string command) {
+  int8_t screenx = getmaxx(stdscr);
+  mvprintw(lnum - 1, screenx - command.length(), "%s", command.c_str());
+}
+
+
+void ClearAll() {
+  erase();    // erase entire screen
+  refresh();  // show erasure
+  lnum = 0;
+  return;
+
+}
+
 void scommandoutput(string output) {
   move(lnum - 1, 0);
   clrtoeol();
@@ -14,26 +34,41 @@ void scommandoutput(string output) {
 }
 
 
-string getargument(string command, int argnumber) {
+string getargument(string command) {
   for (int x = 2; x != command.length() - 1; ++x) {
 
-        cout << "char number " << x << " is not a space" << endl;
-        cout << "command.substr(x, 0) returns: " << command.substr(x - 2, 1) << endl;
+        //cout << "char number " << x << " is not a space" << endl;
+        //cout << "command.substr(x, 0) returns: " << command.substr(x, 1) << endl;
 
-
-
+        if (command.substr(x, 1) == " ") {
+          mvprintw(6, 1, "%s", command.substr( x + 1, 1).c_str());
+          return command.substr( x + 1, 1);
         }
 
     }
 
+}
+
 
 void commandoutput(string output) {
-  mvprintw(lnum, 0, "%s", output.c_str());
-  ++lnum;
+  if (lnum + 2 != getmaxy(stdscr)) {
+    mvprintw(lnum, 0, "%s", output.c_str());
+    ++lnum;
+  } else {
+    ClearAll();
+    refresh();
+    lnum = 0;
+    mvprintw(lnum, 0, "%s", output.c_str());
+    ++lnum;
+  }
+
 }
 
 string COMMANDinput() {
   int8_t screeny = getmaxy(stdscr); // get the height of the screen
+  if (lnum == screeny) {
+    ClearAll();
+  }
   string command; // what will be the final output
   for (int8_t i = 0; i != 1;) { // while '~' is not pressed
     char input = getch(); // get char
@@ -61,11 +96,6 @@ string COMMANDinput() {
 }
 
 
-void scrolldown(int lines) {
-  move(getmaxy(stdscr) + 1, 0);
-}
-
-
 void printLG(string Ifile) {
   string line; // "pointer" for line output
   fstream Ffile;
@@ -90,11 +120,6 @@ void addlnum(int amount) {
 }
 
 
-
-void ClearAll() {
-  erase();    // erase entire screen
-  refresh();  // show erasure
-  lnum = 0;
-  return;
+void listdir() {
 
 }

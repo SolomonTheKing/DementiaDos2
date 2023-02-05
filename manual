@@ -1,0 +1,36 @@
++------------+
+|DEMENTIA DOS|
+|MANUAL      |
++------------+
+
+I. Command Interface
+  KEYBOARD to type in command
+  press - to run typed command
+  press * to backspace command
+  press + to run previous command
+
+II. Basic Commands
+  Clear the screen:    cls / clear
+  print text:          echo
+  print logo:          logo
+  leave Dementia Dos:  exit
+
+III. Advanced Commands
+  reprint the logo + clear the screen:  plogo
+  print memory usage:                   pmem
+
++-------------------------------------------+
+
+
+std::ifstream file("plist.ddos");
+if (file.is_open()) {
+    std::string line;
+    while (std::getline(file, line)) {
+        // using printf() in all tests for consistency
+        printf("%s", line.c_str());
+        std::cout << std::endl;
+        if (line.c_str() == "fs") {
+          return 0;
+        }
+    }
+}

@@ -11,7 +11,6 @@ int32_t lnum = 0; // line number iterator
 
 
 
-
 int main() {
 
 	initscr(); // start ncurses
@@ -19,20 +18,25 @@ int main() {
 
   // runtime code
 
-  printLG("logo.lg"); // print logo
+  readfile("logo.lg"); // print logo
   for (bool x = 0; x != 1;){
     string command = COMMANDinput();
 
     if (command.substr(0, 4) == "exit") {
-      mvprintw(lnum, 0, "|are you sure? [y] or [n]");
-      ++lnum;
-      if (getch() == 'y') {
-        x = true;
-      } else {
-        mvprintw(lnum, 0, "|exit procces terminated");
-        ++lnum;
-      }
-    }
+			if (getargument(command) == "f") {
+				x = true;
+			} else {
+				mvprintw(lnum, 0, "|are you sure? [y] or [n]");
+	      ++lnum;
+	      if (getch() == 'y') {
+	        x = true;
+	      } else {
+	        mvprintw(lnum, 0, "|exit procces terminated");
+	        ++lnum;
+	      }
+	    }
+			}
+
 
     iocommand(command);
 
