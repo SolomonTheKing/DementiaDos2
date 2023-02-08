@@ -10,6 +10,13 @@ void iocommand(string command) {
     readfile("flist.ddos");
   }
 
+  if (command.substr(0, 2) == "df") {
+    commandoutput("|file name:");
+    command = COMMANDinput();
+    showinput(command);
+    deletefile("flist.ddos", command);
+  }
+
   if (command.substr(0, 2) == "cf") {
     commandoutput("|file name:");
     command = COMMANDinput();
@@ -26,6 +33,18 @@ void iocommand(string command) {
 
   if (command.substr(0, 3) == "cls") {
     ClearAll();
+  }
+
+  if (command.substr(0, 6) == "manual") {
+    ClearAll();
+    if (getargument(command) == "i") {
+      readfile("MANUAL/interface");
+    } else if (getargument(command) == "b") {
+      readfile("MANUAL/basic");
+    } else {
+      readfile("MANUAL/manual");
+    }
+    readfile("MANUAL/end");
   }
 
 

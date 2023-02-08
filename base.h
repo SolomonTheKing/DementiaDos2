@@ -18,6 +18,13 @@ void showinput(string command) {
 }
 
 
+void wipefile(string filepath) {
+  fstream file;
+  file.open(filepath, std::ofstream::out | std::ofstream::trunc);
+  file.close();
+}
+
+
 void ClearAll() {
   erase();    // erase entire screen
   refresh();  // show erasure
@@ -37,16 +44,10 @@ void scommandoutput(string output) {
 string getargument(string command) {
   for (int x = 2; x != command.length() - 1; ++x) {
 
-        //cout << "char number " << x << " is not a space" << endl;
-        //cout << "command.substr(x, 0) returns: " << command.substr(x, 1) << endl;
-
         if (command.substr(x, 1) == " ") {
-          mvprintw(6, 1, "%s", command.substr( x + 1, 1).c_str());
           return command.substr( x + 1, 1);
         }
-
     }
-
 }
 
 
