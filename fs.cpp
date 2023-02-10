@@ -47,6 +47,7 @@ int deletefile(string filepath, string ifile) {
       }
 
       wfile.close();
+      remove(filepath.c_str());
       return 0;
     }
 
